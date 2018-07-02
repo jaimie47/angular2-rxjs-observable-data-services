@@ -34,7 +34,7 @@ export class TodoBackendService {
     }
 
 
-    toggleTodo(toggled: Todo) {
+    toggleTodo(toggled: Todo) : Observable<Todo> {
         var headers = new Headers();
         headers.append('Content-Type', 'application/json; charset=utf-8');
         return this.http.put('/todo', JSON.stringify(toggled.toJS()),{headers}).share();

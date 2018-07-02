@@ -10,9 +10,6 @@ import {Todo} from "./Todo";
 import {Footer} from "./Footer";
 import {List} from "immutable";
 import {bootstrap} from "angular2/platform/browser";
-import {Subject} from "rxjs/Subject";
-import {Observable} from "rxjs/Observable";
-import {Observer} from "rxjs/Observer";
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/scan';
 import 'rxjs/add/operator/share';
@@ -28,7 +25,7 @@ import {UiState} from "./state/ui-state";
         <div>
             <section id="todoapp">
 
-                <todo-header (todo)="onAddTodo($event)"></todo-header>
+				<todo-header></todo-header>
 
                 <todo-list></todo-list>
 
@@ -56,19 +53,6 @@ export class App {
         return this.uiStateStore.uiState.map((uiState: UiState) => uiState.message);
     }
 
-
-    onAddTodo(description) {
-        let newTodo = new Todo({id:Math.random(), description});
-        this.uiStateStore.startBackendAction('Saving Todo...');
-
-        this.todoStore.addTodo(newTodo)
-            .subscribe(
-                res => {},
-                err => {
-                    this.uiStateStore.endBackendAction();
-                }
-            );
-    }
 
 }
 

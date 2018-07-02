@@ -1,8 +1,6 @@
-
 import {Injectable} from "angular2/core";
 import {TodoBackendService} from "../TodoBackendService";
 import {Observable} from "rxjs/Observable";
-import {Subject} from "rxjs/Subject";
 import {Todo} from "../Todo";
 import {List} from 'immutable';
 import {asObservable} from "./asObservable";
@@ -13,13 +11,17 @@ export class TodoStore {
 
     private _todos: BehaviorSubject<List<Todo>> = new BehaviorSubject(List([]));
 
+
     constructor(private todoBackendService: TodoBackendService) {
         this.loadInitialData();
     }
 
+
     get todos() {
         return asObservable(this._todos);
+		//return this._todos;
     }
+
 
     loadInitialData() {
         this.todoBackendService.getAllTodos()
@@ -35,8 +37,8 @@ export class TodoStore {
 
     }
 
-    addTodo(newTodo:Todo):Observable {
 
+    addTodo(newTodo:Todo):Observable<List<Todo>> {
         let obs = this.todoBackendService.saveTodo(newTodo);
 
         obs.subscribe(
@@ -47,8 +49,9 @@ export class TodoStore {
         return obs;
     }
 
-    toggleTodo(toggled:Todo): Observable {
-        let obs: Observable = this.todoBackendService.toggleTodo(toggled);
+
+    toggleTodo(toggled:Todo): Observable<Todo> {
+        let obs: Observable<Todo> = this.todoBackendService.toggleTodo(toggled);
 
         obs.subscribe(
             res => {
@@ -63,8 +66,8 @@ export class TodoStore {
     }
 
 
-    deleteTodo(deleted:Todo): Observable {
-        let obs: Observable = this.todoBackendService.deleteTodo(deleted);
+    deleteTodo(deleted:Todo): Observable<Todo> {
+        let obs: Observable<Todo> = this.todoBackendService.deleteTodo(deleted);
 
         obs.subscribe(
                 res => {

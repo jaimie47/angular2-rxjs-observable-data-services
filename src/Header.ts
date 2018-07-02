@@ -1,4 +1,6 @@
-import {Component, Output,EventEmitter} from 'angular2/core';
+import {Component, Input, Output, EventEmitter, Inject} from 'angular2/core';
+import {Todo} from "./Todo";
+import {TodoStore} from "./state/TodoStore";
 
 
 @Component({
@@ -14,11 +16,15 @@ import {Component, Output,EventEmitter} from 'angular2/core';
 })
 export class Header {
 
-    @Output() todo = new EventEmitter();
+	constructor(private todoStore: TodoStore) {
+
+	}
 
     addTodo(input) {
-        this.todo.emit(input.value);
-        input.value = "";
+		let newTodo = new Todo({id:Math.random(), description:input.value});
+		this.todoStore.addTodo(newTodo);
+
+		input.value = "";
     }
 
 }

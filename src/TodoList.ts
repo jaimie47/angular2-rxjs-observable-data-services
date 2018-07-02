@@ -1,8 +1,5 @@
 import {Component, Input, Output, EventEmitter, Inject} from 'angular2/core';
 import {Todo} from "./Todo";
-import {List} from 'immutable';
-import {Observer} from "rxjs/Observer";
-import {Observable} from "rxjs/Observable";
 import {TodoStore} from "./state/TodoStore";
 
 
